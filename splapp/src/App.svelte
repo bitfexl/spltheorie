@@ -1,5 +1,6 @@
 <script>
     import githubSvg from "./assets/github-mark.svg";
+    import Question from "./lib/Question.svelte";
     import QuestionSelector, { getQuestions } from "./lib/QuestionSelector.svelte";
 
     let selectedCategories;
@@ -36,7 +37,12 @@
     </div>
     <br />
     <br />
-    {questionsText}
+    <div class="question">
+        {#each displayedQuestions as question}
+            <Question question={question.question} answers={question.answers} image={question.image} />
+            <br />
+        {/each}
+    </div>
 </main>
 
 <footer>
@@ -60,6 +66,11 @@
 
     .explanation * {
         text-align: left;
+    }
+
+    .question {
+        display: inline-block;
+        max-width: 600px;
     }
 
     footer {
