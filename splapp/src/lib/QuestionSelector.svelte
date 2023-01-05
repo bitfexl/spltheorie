@@ -97,7 +97,7 @@
     }
 
     input[type="checkbox"] {
-        width: 2em;
+        width: 32px;
         height: 1.2em;
         position: relative;
         top: 0.08em;
@@ -113,6 +113,6 @@
     }
 
     .selectedCategories {
-        padding-left: 2em;
+        margin-left: 32px;
     }
 </style>

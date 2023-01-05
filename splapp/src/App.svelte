@@ -25,12 +25,13 @@
     <QuestionSelector bind:selectedCategories />
     <br />
     <br />
+    <button on:click={displayQuestions}>Fragen anzeigen</button>
     <button on:click={displayQuestions}>Start</button>
     <br />
     <br />
     <div class="explanation">
         <ol>
-            <li>Die Gewünschten Fragen auswählen</li>
+            <li>Die gewünschten Fragen auswählen</li>
             <li>Start drücken</li>
             <li>Die Fragen werden solange zufällig abgeprüft,<br />bis jede Frage ein mal richtig beantwortet wurde</li>
         </ol>
