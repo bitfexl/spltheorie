@@ -36,14 +36,18 @@
 
 <div>
     <h1>SPL Lernkartei</h1>
-    <br />
+
+    <div class="spacing" />
+
     <QuestionSelector bind:selectedCategories />
-    <br />
-    <br />
+
+    <div class="spacing" />
+
     <button on:click={displayQuestions}>Fragen anzeigen</button>
     <button on:click={sendStartEvent}>Start</button>
-    <br />
-    <br />
+
+    <div class="spacing" />
+
     <div class="explanation">
         <ol>
             <li>Die gewünschten Fragen auswählen</li>
@@ -51,13 +55,19 @@
             <li>Die Fragen werden solange zufällig abgeprüft,<br />bis jede Frage ein mal richtig beantwortet wurde</li>
         </ol>
     </div>
-    <br />
-    <br />
+
+    <div class="spacing" />
+
     <div class="question">
+        <div class="spacing separator" />
+        <div class="spacing" />
+
         {#each selectedQuestions as question}
             <Question question={question.question} answers={question.answers} image={question.image} />
             <br />
         {/each}
+
+        <div class="spacing separator" />
     </div>
 </div>
 
@@ -80,7 +90,12 @@
         max-width: 600px;
     }
 
-    br {
-        user-select: none;
+    .spacing {
+        padding-bottom: 34px;
+    }
+
+    .separator {
+        border: 0;
+        border-bottom: 2px solid darkgray;
     }
 </style>
