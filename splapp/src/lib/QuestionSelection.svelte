@@ -44,7 +44,7 @@
     <div class="spacing" />
 
     <button on:click={displayQuestions}>Fragen anzeigen</button>
-    <button on:click={sendStartEvent}>Start</button>
+    <button on:click={sendStartEvent}>Quiz starten</button>
 
     <div class="spacing" />
 
