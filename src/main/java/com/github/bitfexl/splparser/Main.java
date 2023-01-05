@@ -25,6 +25,7 @@ public class Main {
     /**
      * arg0 = output dir ending with '/'
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void main(String[] args) throws IOException {
         final String outputDir = args.length > 0 ? args[0] : "./";
         new File(outputDir).mkdirs();
