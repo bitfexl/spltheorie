@@ -3,7 +3,7 @@ package com.github.bitfexl.splparser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SPLParser {
+public class SPLQuestionParser {
     private static final String START_ANSWER_CORRECT = "þ";
     private static final String START_ANSWER_WRONG = "¨";
 

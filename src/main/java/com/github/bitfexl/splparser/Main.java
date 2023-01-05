@@ -28,7 +28,7 @@ public class Main {
             try (PDDocument doc = PDDocument.load(Main.class.getResourceAsStream("/pdf/" + pdf))) {
 
                 String text = new PDFTextStripper().getText(doc);
-                List<Question> parsedQuestions = new SPLParser().parse(text);
+                List<Question> parsedQuestions = new SPLQuestionParser().parse(text);
                 String json = gson.toJson(parsedQuestions);
 
                 System.out.println("Questions in PDF\n---------------------------------");
