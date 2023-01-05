@@ -19,7 +19,7 @@
     export let image = null;
 </script>
 
-<div>
+<div class="question">
     <b>
         <p>
             {@html question.replaceAll("\n", "<br/>")}
@@ -34,16 +34,24 @@
         <p class="answer">
             {@html answer.answer.replaceAll("\n", "<br/>")}
             {#if answer.correct}
-                <span style="color: #009432; font-weight: bolder;">✓</span>
+                <span class="marker" style="color: #009432; font-weight: bolder;">✓</span>
             {:else}
-                <span style="color: #ff7675;">✗</span>
+                <span class="marker" style="color: #ff7675;">✗</span>
             {/if}
         </p>
     {/each}
 </div>
 
 <style>
+    .question {
+        padding-top: 0.6em;
+    }
+
     .answer {
         padding-top: 0.5em;
+    }
+
+    .marker {
+        user-select: none;
     }
 </style>

@@ -79,4 +79,8 @@
         display: inline-block;
         max-width: 600px;
     }
+
+    br {
+        user-select: none;
+    }
 </style>
