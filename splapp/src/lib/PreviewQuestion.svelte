@@ -34,9 +34,9 @@
         <p class="answer">
             {@html answer.answer.replaceAll("\n", "<br/>")}
             {#if answer.correct}
-                <span>✓</span>
+                <span style="color: #009432; font-weight: bolder;">✓</span>
             {:else}
-                <span>✗</span>
+                <span style="color: #ff7675;">✗</span>
             {/if}
         </p>
     {/each}

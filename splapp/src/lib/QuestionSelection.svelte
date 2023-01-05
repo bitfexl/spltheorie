@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import Question from "./Question.svelte";
+    import Question from "./PreviewQuestion.svelte";
     import QuestionSelector, { getQuestions } from "./QuestionSelector.svelte";
 
     const dispatch = createEventDispatcher();
