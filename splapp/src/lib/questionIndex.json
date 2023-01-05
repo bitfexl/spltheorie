@@ -1,0 +1,50 @@
+{
+    "urlTemplate": "/questions/{id}.json",
+    "categories": [
+        {
+            "id": "ALW",
+            "name": "SPL Luftrecht",
+            "count": 30
+        },
+        {
+            "id": "HPL",
+            "name": "SPL Menschliches Leistungsvermögen",
+            "count": 30
+        },
+        {
+            "id": "MET",
+            "name": "SPL Meteorologie",
+            "count": 63
+        },
+        {
+            "id": "COM",
+            "name": "SPL Funkkommunikation",
+            "count": 39
+        },
+        {
+            "id": "PFA",
+            "name": "SPL Aerodynamik (Grundlagen des Fliegens)",
+            "count": 39
+        },
+        {
+            "id": "OPR",
+            "name": "SPL Flugbetriebliche Verfahren",
+            "count": 38
+        },
+        {
+            "id": "FPP",
+            "name": "SPL Flugleistung und Flugplanung",
+            "count": 18
+        },
+        {
+            "id": "AGK",
+            "name": "SPL Allgemeine Luftfahrzeugkunde",
+            "count": 54
+        },
+        {
+            "id": "NAV",
+            "name": "SPL Navigation",
+            "count": 48
+        }
+    ]
+}
