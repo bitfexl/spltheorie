@@ -48,6 +48,11 @@ public class Question {
 
     private List<Answer> answers;
 
+    /**
+     * The image (annex) as base64 png, if any.
+     */
+    private String image;
+
     public Question(int questionIndex, String question) {
         this.questionIndex = questionIndex;
         this.question = question;
@@ -82,5 +87,13 @@ public class Question {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

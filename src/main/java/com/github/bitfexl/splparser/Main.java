@@ -2,10 +2,11 @@ package com.github.bitfexl.splparser;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class Main {
@@ -21,23 +22,30 @@ public class Main {
             "SPL-ECQB-PPL-90-NAV-ge.pdf"
     };
 
-    public static void main(String[] args) {
-        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    /**
+     * arg0 = output dir ending with '/'
+     */
+    public static void main(String[] args) throws IOException {
+        final String outputDir = args.length > 0 ? args[0] : "./";
+        new File(outputDir).mkdirs();
+
+        final Gson gson = new GsonBuilder()/*.setPrettyPrinting()*/.create();
+
+        final SPLParser parser = new SPLParser();
 
         for (String pdf : PDF_NAMES) {
-            try (PDDocument doc = PDDocument.load(Main.class.getResourceAsStream("/pdf/" + pdf))) {
+            try (InputStream inputStream = Main.class.getResourceAsStream("/pdf/" + pdf)) {
+                List<Question> questions = parser.parsePdf(inputStream);
+                String json = gson.toJson(questions);
 
-                String text = new PDFTextStripper().getText(doc);
-                List<Question> parsedQuestions = new SPLQuestionParser().parse(text);
-                String json = gson.toJson(parsedQuestions);
-
-                System.out.println("Questions in PDF\n---------------------------------");
-                // System.out.println(text);
-                // System.out.println(json);
-                System.out.println("Size: " + parsedQuestions.size());
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                try (FileWriter fileWriter = new FileWriter(outputDir + getId(pdf) + ".json")) {
+                    fileWriter.write(json);
+                }
             }
         }
+    }
+
+    private static String getId(String pdfName) {
+        return pdfName.split("-")[4];
     }
 }
