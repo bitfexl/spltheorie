@@ -1,14 +1,18 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import Question from "./Question.svelte";
     import QuestionSelector, { getQuestions } from "./QuestionSelector.svelte";
+
+    const dispatch = createEventDispatcher();
 
     let selectedCategories;
 
     let selectedQuestions = [];
 
-    function startQuiz() {
-        loadSelectedQuestions();
-        // start event
+    function sendStartEvent() {
+        if (loadSelectedQuestions() && selectedQuestions.length > 0) {
+            dispatch("start", selectedQuestions);
+        }
     }
 
     function displayQuestions() {
@@ -17,12 +21,16 @@
 
     function loadSelectedQuestions() {
         let questions = getQuestions(selectedCategories);
+
         if (questions) {
             selectedQuestions = questions;
         } else {
             alert("loading...");
             // todo: fix loading display
+            return false;
         }
+
+        return true;
     }
 </script>
 
@@ -33,7 +41,7 @@
     <br />
     <br />
     <button on:click={displayQuestions}>Fragen anzeigen</button>
-    <button on:click={startQuiz}>Start</button>
+    <button on:click={sendStartEvent}>Start</button>
     <br />
     <br />
     <div class="explanation">

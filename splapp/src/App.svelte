@@ -1,10 +1,14 @@
 <script>
     import githubSvg from "./assets/github-mark.svg";
     import QuestionSelection from "./lib/QuestionSelection.svelte";
+
+    function startQuiz(e) {
+        console.log(e.detail);
+    }
 </script>
 
 <main>
-    <QuestionSelection />
+    <QuestionSelection on:start={startQuiz} />
 </main>
 
 <footer>
