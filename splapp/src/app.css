@@ -30,7 +30,7 @@ button {
 }
 
 #app {
-    min-height: 100vh;
+    min-height: calc(100vh - 20px);
     position: relative;
     padding-bottom: 160px;
     margin: 10px;
