@@ -37,6 +37,8 @@
 <div>
     <h1>SPL Lernkartei</h1>
 
+    <p class="note">Stand 1. September 2022</p>
+
     <div class="spacing" />
 
     <QuestionSelector bind:selectedCategories />
@@ -52,7 +54,7 @@
         <ol>
             <li>Die gewünschten Fragen auswählen</li>
             <li>Start drücken</li>
-            <li>Die Fragen werden solange zufällig abgeprüft,<br />bis jede Frage ein mal richtig beantwortet wurde</li>
+            <li>Die Fragen werden solange zufällig abgeprüft,<br />bis jede Frage ein mal beantwortet wurde</li>
         </ol>
     </div>
 
@@ -97,5 +99,9 @@
     .separator {
         border: 0;
         border-bottom: 2px solid darkgray;
+    }
+
+    .note {
+        color: gray;
     }
 </style>
