@@ -33,4 +33,5 @@ button {
     min-height: 100vh;
     position: relative;
     padding-bottom: 160px;
+    margin: 10px;
 }
