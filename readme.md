@@ -10,4 +10,6 @@ Bereits erstellte json Dateien in *./splparser/generatedJson*.
 
 ***./splapp***
 
-TODO (Lernkartei/Lernapp)
+Lernkartei/Lernapp
+
+App: https://splapp.duckdns.org/
