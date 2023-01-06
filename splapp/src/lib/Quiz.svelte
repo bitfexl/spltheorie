@@ -63,7 +63,6 @@
         <br />
         <button on:click={() => dispatch("end")}>Beenden</button>
     {:else}
-        {wrongAnswered}
         <p class="note">Frage {initialCount - openQuestions.length}/{initialCount}</p>
         <div class="question">
             <QuizQuestion question={currentQuestion} bind:correct={currentQuestionCorrect} {showCorrect} />
