@@ -19,19 +19,25 @@ import java.util.List;
  * see: <a href="https://www.tutorialkart.com/pdfbox/extract-images-from-pdf-using-pdfbox/">https://www.tutorialkart.com/pdfbox/extract-images-from-pdf-using-pdfbox/</a>
  */
 public class PdfImageSaver extends PDFStreamEngine {
-    private List<BufferedImage> images;
+    public record PdfImage(int page, BufferedImage image) { }
+
+    private List<PdfImage> images;
+
+    private int currentPage;
 
     /**
      * Get all the images in the order they appear.
      * @param document The document to save images from.
-     * @return A list of BufferedImages.
+     * @return A list of images and the page they appear on.
      * @throws IOException Error parsing pdf document.
      */
-    public List<BufferedImage> getImages(PDDocument document) throws IOException {
+    public List<PdfImage> getImages(PDDocument document) throws IOException {
         images = new ArrayList<>();
+        currentPage = 0;
 
         for (PDPage page : document.getPages()) {
             processPage(page);
+            currentPage++;
         }
 
         return images;
@@ -44,7 +50,7 @@ public class PdfImageSaver extends PDFStreamEngine {
             PDXObject xobject = getResources().getXObject(objectName);
 
             if (xobject instanceof PDImageXObject image) {
-                images.add(image.getImage());
+                images.add(new PdfImage(currentPage, image.getImage()));
             }
         } else {
             super.processOperator(operator, operands);

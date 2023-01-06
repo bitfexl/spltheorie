@@ -6,10 +6,14 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SPLParser {
     private static final String HAS_ANNEX = "Please pay attention to annex ";
+
+    private static final String ANNEX_PAGE_REGEX = "Annexes\\s*\\d\\s*Annex \\d\\s*";
 
     private final SPLQuestionParser questionParser = new SPLQuestionParser();
 
@@ -31,7 +35,21 @@ public class SPLParser {
     }
 
     private void parseImages(List<Question> questions, PDDocument doc) throws IOException {
-        List<BufferedImage> images = imageSaver.getImages(doc);
+        PDFTextStripper reader = new PDFTextStripper();
+
+        // Annex id and image
+        Map<Integer, BufferedImage> images = new HashMap<>();
+
+        for (PdfImageSaver.PdfImage img : imageSaver.getImages(doc)) {
+            reader.setStartPage(img.page() + 1);
+            reader.setEndPage(img.page() + 1);
+            String text = reader.getText(doc);
+
+            if (text.matches(ANNEX_PAGE_REGEX)) {
+                int index = Integer.parseInt(text.split("Annex ")[1].split(" ")[0]);
+                images.put(index, img.image());
+            }
+        }
 
         for (Question question : questions) {
             if (question.getQuestion().contains(HAS_ANNEX)) {
@@ -39,11 +57,14 @@ public class SPLParser {
                 String[] parts = question.getQuestion().split(HAS_ANNEX);
                 int annexIndex = Integer.parseInt(parts[1]);
 
-                // First image is a banner, so annexIndex = index
                 BufferedImage annex = images.get(annexIndex);
-                String base64 = ImgUtils.toBase64(annex);
 
-                question.setImage(base64);
+                if (annex != null) {
+                    String base64 = ImgUtils.toBase64(annex);
+                    question.setImage(base64);
+                } else {
+                    System.out.println("WARNING: Annex " + annexIndex + " not found");
+                }
             }
         }
     }
