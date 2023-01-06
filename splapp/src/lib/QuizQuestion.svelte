@@ -1,4 +1,6 @@
 <script>
+    import Image from "./Image.svelte";
+
     /**
      * The question json.
      * see: QuestionSelector
@@ -42,7 +44,7 @@
     </b>
 
     {#if question.image}
-        <img src="data:image/png;base64,{question.image}" alt="" />
+        <Image src="data:image/png;base64,{question.image}" />
     {/if}
 
     {#each question.answers as answer}

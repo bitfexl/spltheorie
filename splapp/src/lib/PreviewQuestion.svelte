@@ -1,4 +1,6 @@
 <script>
+    import Image from "./Image.svelte";
+
     /**
      * The question string.
      */
@@ -27,7 +29,7 @@
     </b>
 
     {#if image}
-        <img src="data:image/png;base64,{image}" alt="" />
+        <Image src="data:image/png;base64,{image}" />
     {/if}
 
     {#each answers as answer}
