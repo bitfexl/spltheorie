@@ -27,6 +27,7 @@ jobs:
       - name: Compile source
         run: |
           cd source/splapp
+          npm install
           npm run build
           cd ../..
           cp -r source/splapp/dist/* publish/
