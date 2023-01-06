@@ -35,6 +35,8 @@ public class SPLQuestionParser {
             for (int a=0; a<4; a++) {
                 if (!checkAnswer(lines[i])) {
                     if (lines[i].isBlank()) {
+                        i++;
+                        a--;
                         continue;
                     }
                     throw new IllegalStateException("Expected answer but got: '" + lines[i] + "' at line " + i + ", question " + questionIndex + ".");
@@ -45,6 +47,10 @@ public class SPLQuestionParser {
                 parsingQuestion.getAnswers().add(
                         new Question.Answer(a + 1, fixFormatting(currentAnswer.toString()), currentAnswerCorrect)
                 );
+            }
+
+            if (parsingQuestion.getAnswers().size() != 4) {
+                throw new IllegalStateException("Expected 4 answers, question: " + questionIndex + ".");
             }
 
             // 3/3: add to question list
