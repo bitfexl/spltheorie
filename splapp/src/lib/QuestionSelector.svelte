@@ -1,14 +1,45 @@
 <script context="module">
     import questionIndex from "./questionIndex.json";
 
+    /**
+     * {
+     *  category: question
+     * }
+     *
+     * A single question:
+     * {
+     *  question: string,
+     *  id: string,
+     *  questionIndex: int,
+     *  answers: [
+     *      {
+     *          answerIndex: int,
+     *          answer: string,
+     *          correct: boolean
+     *      }
+     *  ],
+     *  category: {
+     *      name: string,
+     *      id: string,
+     *      count: int
+     *  }
+     * }
+     */
     let questions = {};
 
     for (let category of questionIndex.categories) {
-        fetch(questionIndex.urlTemplate.replace("{id}", category.id)).then((data) => {
-            data.json().then((qs) => {
-                questions[category.id] = qs;
+        fetch(questionIndex.urlTemplate.replace("{id}", category.id))
+            .then((data) => data.json())
+            .then((rawQuestions) => {
+                for (let question of rawQuestions) {
+                    Object.assign(question, {
+                        category,
+                        id: category.id + question.questionIndex,
+                    });
+                }
+
+                questions[category.id] = rawQuestions;
             });
-        });
     }
 
     export function getQuestions(categories) {
