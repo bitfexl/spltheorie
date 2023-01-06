@@ -1,14 +1,21 @@
 <script>
     import githubSvg from "./assets/github-mark.svg";
     import QuestionSelection from "./lib/QuestionSelection.svelte";
+    import Quiz from "./lib/Quiz.svelte";
+
+    let questions;
 
     function startQuiz(e) {
-        console.log(e.detail);
+        questions = e.detail;
     }
 </script>
 
 <main>
-    <QuestionSelection on:start={startQuiz} />
+    {#if questions}
+        <Quiz {questions} />
+    {:else}
+        <QuestionSelection on:start={startQuiz} />
+    {/if}
 </main>
 
 <footer>
