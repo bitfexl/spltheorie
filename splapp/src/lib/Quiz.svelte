@@ -1,4 +1,5 @@
 <script>
+    import { createEventDispatcher } from "svelte";
     import QuizQuestion from "./QuizQuestion.svelte";
 
     export let questions;
@@ -7,6 +8,8 @@
         questions; // listen for update
         update();
     }
+
+    const dispatch = createEventDispatcher();
 
     let currentQuestionCorrect;
     let showCorrect;
@@ -33,14 +36,14 @@
         }
         showCorrect = false;
 
-        if (openQuestions.length == 0) {
-            showResult = true;
-            return;
-        }
-
         if (currentQuestion && !currentQuestionCorrect) {
             // openQuestions.push(currentQuestion); // endless mode (every question must be answered correctly)
             wrongAnswered++;
+        }
+
+        if (openQuestions.length == 0) {
+            showResult = true;
+            return;
         }
 
         let i = Math.floor(Math.random() * openQuestions.length);
@@ -53,11 +56,14 @@
 <div class="wrapper">
     {#if showResult}
         <h2>Ergebnis</h2>
+        <br />
         <p>{initialCount - wrongAnswered}/{initialCount} Fragen wurden richtig beantwortet.</p>
         <p>Dies entspricht {Math.round(((initialCount - wrongAnswered) / initialCount) * 10000) / 100}%.</p>
         <p>Bei einer Prüfung werden mindestens 75% in jedem Teilbereich benötigt.</p>
-        <button>Beenden</button>
+        <br />
+        <button on:click={() => dispatch("end")}>Beenden</button>
     {:else}
+        {wrongAnswered}
         <p class="note">Frage {initialCount - openQuestions.length}/{initialCount}</p>
         <div class="question">
             <QuizQuestion question={currentQuestion} bind:correct={currentQuestionCorrect} {showCorrect} />

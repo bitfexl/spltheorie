@@ -12,7 +12,7 @@
 
 <main>
     {#if questions}
-        <Quiz {questions} />
+        <Quiz {questions} on:end={() => (questions = null)} />
     {:else}
         <QuestionSelection on:start={startQuiz} />
     {/if}
