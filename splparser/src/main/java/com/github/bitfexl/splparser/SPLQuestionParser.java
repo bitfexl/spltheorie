@@ -94,7 +94,7 @@ public class SPLQuestionParser {
     }
 
     private boolean appendAnswer(String line) {
-        if (line.startsWith(START_ANSWER_CORRECT) || line.startsWith(START_ANSWER_WRONG) || line.isBlank()) {
+        if (line.startsWith(START_ANSWER_CORRECT) || line.startsWith(START_ANSWER_WRONG) || line.startsWith(" ")) {
             return false;
         }
 
