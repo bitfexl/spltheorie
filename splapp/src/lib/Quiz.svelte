@@ -11,6 +11,8 @@
 
     const dispatch = createEventDispatcher();
 
+    let selected;
+
     let currentQuestionCorrect;
     let showCorrect;
     let showResult;
@@ -65,10 +67,10 @@
     {:else}
         <p class="note">Frage {initialCount - openQuestions.length}/{initialCount}</p>
         <div class="question">
-            <QuizQuestion question={currentQuestion} bind:correct={currentQuestionCorrect} {showCorrect} />
+            <QuizQuestion question={currentQuestion} bind:correct={currentQuestionCorrect} {showCorrect} bind:selected />
         </div>
         <div class="next">
-            <button on:click={nextQuestion}>Weiter</button>
+            <button on:click={nextQuestion} disabled={selected == null}>Weiter</button>
         </div>
     {/if}
 </div>

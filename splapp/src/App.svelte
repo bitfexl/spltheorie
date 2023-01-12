@@ -8,11 +8,20 @@
     function startQuiz(e) {
         questions = e.detail;
     }
+
+    function end() {
+        questions = null;
+    }
 </script>
 
 <main>
     {#if questions}
-        <Quiz {questions} on:end={() => (questions = null)} />
+        <div class="wrapper">
+            <div class="header">
+                <button class="linkLike" on:click={end}>Beenden</button>
+            </div>
+            <Quiz {questions} on:end={end} />
+        </div>
     {:else}
         <QuestionSelection on:start={startQuiz} />
     {/if}
@@ -36,6 +45,15 @@
         position: absolute;
         bottom: 40px;
         width: 100%;
+    }
+
+    .wrapper {
+        display: inline-block;
+    }
+
+    .header {
+        text-align: left;
+        padding-bottom: 40px;
     }
 
     .icon {
