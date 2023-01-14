@@ -15,6 +15,10 @@
         }
     }
 
+    function sendTrainingEvent() {
+        dispatch("training");
+    }
+
     function displayQuestions() {
         loadSelectedQuestions();
     }
@@ -44,6 +48,10 @@
     <QuestionSelector bind:selectedCategories />
 
     <div class="spacing" />
+
+    <button class="linkLike" on:click={sendTrainingEvent}>Lernfächer</button>
+
+    <div class="spacing-sm" />
 
     <button on:click={displayQuestions}>Fragen anzeigen</button>
     <button on:click={sendStartEvent}>Quiz starten</button>
@@ -94,6 +102,10 @@
 
     .spacing {
         padding-bottom: 34px;
+    }
+
+    .spacing-sm {
+        padding-bottom: 17px;
     }
 
     .separator {
