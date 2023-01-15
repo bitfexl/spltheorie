@@ -76,14 +76,14 @@
 </div>
 
 <style>
-    .wrapper {
-        display: inline-block;
-        max-width: 600px;
-    }
-
     .question {
         min-height: 300px;
         padding-bottom: 40px;
+        background-color: #fcfcfc;
+        box-shadow: 0 0 2px #e0e0e0;
+        padding: 10px;
+        border-radius: 2px;
+        margin: 20px 0;
     }
 
     .next {

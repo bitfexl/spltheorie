@@ -57,6 +57,7 @@
 
     .wrapper {
         display: inline-block;
+        width: min(600px, 100%);
     }
 
     .header {

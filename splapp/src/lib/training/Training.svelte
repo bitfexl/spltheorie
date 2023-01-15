@@ -79,13 +79,9 @@
 <LocalStorage key="trays" bind:val={trays} />
 
 <div class="content">
-    <h1>Lernfächer</h1>
-
-    <div class="spacing" />
-
     {#if activeTray != -1}
         <div class="spacing">
-            <h3>Fach {activeTray + 1}</h3>
+            <h2>Fach {activeTray + 1}</h2>
             <p>
                 {trays[activeTray].length} Frage{trays[activeTray].length != 1 ? "n" : ""} (<Percent
                     total={allQuestions.length}
@@ -95,13 +91,17 @@
             <button class="linkLike" on:click={() => setTray(-1)}>Zurück zur Lernfächerauswahl</button>
         </div>
         {#if questionId}
-            <!-- undefined if no question in tray -->
-            <div class="question">
-                <TrainingQuestion question={questions[questionId]} on:next={nextQuestion} />
+            <div class="questionWrapper">
+                <!-- undefined if no question in tray -->
+                <div class="question">
+                    <TrainingQuestion question={questions[questionId]} on:next={nextQuestion} />
+                </div>
             </div>
         {/if}
     {:else}
         <div class="spacing">
+            <h1>Lernfächer</h1>
+            <div class="spacing" />
             <h3>Erklärung</h3>
             <p>
                 Ziel ist es, dass sich alle Fragen in Fach 5 befinden. Wird eine Frage richtig beantwortet wandert sie ein Fach nach oben.
@@ -128,8 +128,6 @@
 
 <style>
     .content {
-        display: inline-block;
-        width: 600px; /* todo: fix for mobile */
         text-align: center;
     }
 
@@ -146,6 +144,15 @@
         padding: 10px;
         background-color: whitesmoke;
         box-shadow: 0 0 2px gray;
+    }
+
+    .questionWrapper {
+        min-height: 300px;
+        text-align: center;
+        background-color: #fcfcfc;
+        box-shadow: 0 0 2px #e0e0e0;
+        padding: 10px;
+        border-radius: 2px;
     }
 
     .question {
