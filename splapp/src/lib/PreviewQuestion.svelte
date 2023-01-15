@@ -6,6 +6,8 @@
      */
     export let question;
 
+    export let id;
+
     /**
      * The answers:
      * {
@@ -22,6 +24,7 @@
 </script>
 
 <div class="question">
+    <p class="note">{id}</p>
     <b>
         <p>
             {@html question.replaceAll("\n", "<br/>")}
@@ -55,5 +58,11 @@
 
     .marker {
         user-select: none;
+    }
+
+    .note {
+        color: gray;
+        font-size: 0.91em;
+        margin-bottom: 0.1em;
     }
 </style>

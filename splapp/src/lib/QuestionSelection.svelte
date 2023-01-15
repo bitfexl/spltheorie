@@ -73,7 +73,7 @@
         <div class="spacing" />
 
         {#each selectedQuestions as question}
-            <Question question={question.question} answers={question.answers} image={question.image} />
+            <Question question={question.question} answers={question.answers} image={question.image} id={question.id} />
             <br />
         {/each}
 
