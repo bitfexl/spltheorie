@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import QuizQuestion from "../QuizQuestion.svelte";
+    import QuizQuestion from "./QuizQuestion.svelte";
 
     /**
      * The question json.
@@ -34,7 +34,11 @@
     }
 </script>
 
-<QuizQuestion {question} bind:selected bind:correct {showCorrect} />
+<div class="questionWrapper">
+    <div class="question">
+        <QuizQuestion {question} bind:selected bind:correct {showCorrect} />
+    </div>
+</div>
 <div class="center">
     <button on:click={next} disabled={!selected}>{showCorrect ? "Weiter" : "Prüfen"}</button>
 </div>
@@ -44,8 +48,21 @@
         text-align: center;
     }
 
+    .questionWrapper {
+        min-height: 300px;
+        text-align: center;
+        background-color: #fcfcfc;
+        box-shadow: 0 0 2px #e0e0e0;
+        padding: 10px;
+        border-radius: 2px;
+    }
+
+    .question {
+        display: inline-block;
+    }
+
     button {
         margin-top: 20px;
-        font-size: 1em;
+        font-size: 1.06em;
     }
 </style>

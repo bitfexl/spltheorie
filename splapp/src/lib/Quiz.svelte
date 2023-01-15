@@ -1,6 +1,6 @@
 <script>
     import { createEventDispatcher } from "svelte";
-    import QuizQuestion from "./QuizQuestion.svelte";
+    import SelfCheckQuestion from "./SelfCheckQuestion.svelte";
 
     export let questions;
 
@@ -11,10 +11,6 @@
 
     const dispatch = createEventDispatcher();
 
-    let selected;
-
-    let currentQuestionCorrect;
-    let showCorrect;
     let showResult;
 
     let openQuestions = [];
@@ -27,18 +23,19 @@
         initialCount = openQuestions.length;
         wrongAnswered = 0;
         showResult = false;
-        showCorrect = true; // trigger question update
-        nextQuestion();
+        currentQuestion = randomQuestion();
     }
 
-    function nextQuestion() {
-        if (!showCorrect) {
-            showCorrect = true;
-            return;
-        }
-        showCorrect = false;
+    function randomQuestion() {
+        let i = Math.floor(Math.random() * openQuestions.length);
+        let question = openQuestions[i];
+        openQuestions.splice(i, 1);
+        openQuestions = [...openQuestions]; // update
+        return question;
+    }
 
-        if (currentQuestion && !currentQuestionCorrect) {
+    function nextQuestion(e) {
+        if (!e.detail.correct) {
             // openQuestions.push(currentQuestion); // endless mode (every question must be answered correctly)
             wrongAnswered++;
         }
@@ -48,10 +45,7 @@
             return;
         }
 
-        let i = Math.floor(Math.random() * openQuestions.length);
-        currentQuestion = openQuestions[i];
-        openQuestions.splice(i, 1);
-        openQuestions = [...openQuestions]; // update
+        currentQuestion = randomQuestion();
     }
 </script>
 
@@ -67,28 +61,14 @@
     {:else}
         <p class="note">Frage {initialCount - openQuestions.length}/{initialCount}</p>
         <div class="question">
-            <QuizQuestion question={currentQuestion} bind:correct={currentQuestionCorrect} {showCorrect} bind:selected />
-        </div>
-        <div class="next">
-            <button on:click={nextQuestion} disabled={selected == null}>Weiter</button>
+            <SelfCheckQuestion question={currentQuestion} on:next={nextQuestion} />
         </div>
     {/if}
 </div>
 
 <style>
     .question {
-        min-height: 300px;
-        padding-bottom: 40px;
-        background-color: #fcfcfc;
-        box-shadow: 0 0 2px #e0e0e0;
-        padding: 10px;
-        border-radius: 2px;
-        margin: 20px 0;
-    }
-
-    .next {
-        text-align: center;
-        font-size: 1.2em;
+        margin-top: 20px;
     }
 
     .note {

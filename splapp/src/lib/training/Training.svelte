@@ -3,8 +3,7 @@
     import { getQuestions } from "../QuestionSelector.svelte";
     import LocalStorage from "../LocalStorage.svelte";
     import Percent from "../Percent.svelte";
-    import QuizQuestion from "../QuizQuestion.svelte";
-    import TrainingQuestion from "./TrainingQuestion.svelte";
+    import SelfCheckQuestion from "../SelfCheckQuestion.svelte";
 
     const allCategories = questionIndex.categories.map((c) => c.id);
 
@@ -91,12 +90,8 @@
             <button class="linkLike" on:click={() => setTray(-1)}>Zurück zur Lernfächerauswahl</button>
         </div>
         {#if questionId}
-            <div class="questionWrapper">
-                <!-- undefined if no question in tray -->
-                <div class="question">
-                    <TrainingQuestion question={questions[questionId]} on:next={nextQuestion} />
-                </div>
-            </div>
+            <!-- undefined if no question in tray -->
+            <SelfCheckQuestion question={questions[questionId]} on:next={nextQuestion} />
         {/if}
     {:else}
         <div class="spacing">
@@ -144,19 +139,6 @@
         padding: 10px;
         background-color: whitesmoke;
         box-shadow: 0 0 2px gray;
-    }
-
-    .questionWrapper {
-        min-height: 300px;
-        text-align: center;
-        background-color: #fcfcfc;
-        box-shadow: 0 0 2px #e0e0e0;
-        padding: 10px;
-        border-radius: 2px;
-    }
-
-    .question {
-        display: inline-block;
     }
 
     .start {
