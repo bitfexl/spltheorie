@@ -4,6 +4,7 @@
     import LocalStorage from "../LocalStorage.svelte";
     import Percent from "../Percent.svelte";
     import QuizQuestion from "../QuizQuestion.svelte";
+    import TrainingQuestion from "./TrainingQuestion.svelte";
 
     const allCategories = questionIndex.categories.map((c) => c.id);
 
@@ -63,20 +64,12 @@
     // quiz question ///////////////////////////////////////////////////////////
 
     let questionId; // active question
-    let showCorrect = false;
-    let selectionCorrect;
 
-    function nextQuestion() {
-        if (!showCorrect) {
-            showCorrect = true;
-            return;
-        }
-        showCorrect = false;
-
-        if (selectionCorrect) {
-            promote(questionId, activeTray);
+    function nextQuestion(e) {
+        if (e.detail.correct) {
+            promote(e.detail.question.id, activeTray);
         } else {
-            demote(questionId, activeTray);
+            demote(e.detail.question.id, activeTray);
         }
 
         questionId = randomQuestion(activeTray);
@@ -85,49 +78,66 @@
 
 <LocalStorage key="trays" bind:val={trays} />
 
-<h1>Lernfächer</h1>
+<div class="content">
+    <h1>Lernfächer</h1>
 
-<p>So gehts:</p>
+    <div class="spacing" />
 
-{#if activeTray != -1}
-    <div>
-        <h3>Fach {activeTray + 1}</h3>
-        <p>
-            {trays[activeTray].length} Frage{trays[activeTray].length != 1 ? "n" : ""} (<Percent
-                total={allQuestions.length}
-                actual={trays[activeTray].length}
-            />)
-        </p>
-    </div>
-    {#if questionId}
-        <!-- undefined if no question in tray -->
-        <QuizQuestion question={questions[questionId]} bind:correct={selectionCorrect} {showCorrect} />
-        <button on:click={() => nextQuestion()}>Weiter</button>
-    {/if}
-    <br />
-    <button class="linkLike" on:click={() => setTray(-1)}>Zurück zur Lernfächerauswahl</button>
-{:else}
-    <div class="trays">
-        {#each trays as tray, ti}
-            <div class="tray">
-                <div>
-                    <h3>Fach {ti + 1}</h3>
-                    <p>{tray.length} Frage{tray.length != 1 ? "n" : ""} (<Percent total={allQuestions.length} actual={tray.length} />)</p>
-                </div>
-                <div class="start">
-                    <button class="linkLike" on:click={() => setTray(ti)}>Fragen üben</button>
-                </div>
+    {#if activeTray != -1}
+        <div class="spacing">
+            <h3>Fach {activeTray + 1}</h3>
+            <p>
+                {trays[activeTray].length} Frage{trays[activeTray].length != 1 ? "n" : ""} (<Percent
+                    total={allQuestions.length}
+                    actual={trays[activeTray].length}
+                />)
+            </p>
+            <button class="linkLike" on:click={() => setTray(-1)}>Zurück zur Lernfächerauswahl</button>
+        </div>
+        {#if questionId}
+            <!-- undefined if no question in tray -->
+            <div class="question">
+                <TrainingQuestion question={questions[questionId]} on:next={nextQuestion} />
             </div>
-        {/each}
-    </div>
-{/if}
+        {/if}
+    {:else}
+        <div class="spacing">
+            <h3>Erklärung</h3>
+            <p>
+                Ziel ist es, dass sich alle Fragen in Fach 5 befinden. Wird eine Frage richtig beantwortet wandert sie ein Fach nach oben.
+                Wird eine Frage falsch beantwortet wandert sie ein Fach nach unten. Zu Beginn befinden sich alle Fragen in Fach 1.
+            </p>
+        </div>
+        <div class="trays">
+            {#each trays as tray, ti}
+                <div class="tray">
+                    <div>
+                        <h3>Fach {ti + 1}</h3>
+                        <p>
+                            {tray.length} Frage{tray.length != 1 ? "n" : ""} (<Percent total={allQuestions.length} actual={tray.length} />)
+                        </p>
+                    </div>
+                    <div class="start">
+                        <button class="linkLike" on:click={() => setTray(ti)}>Fragen üben</button>
+                    </div>
+                </div>
+            {/each}
+        </div>
+    {/if}
+</div>
 
 <style>
+    .content {
+        display: inline-block;
+        width: 600px; /* todo: fix for mobile */
+        text-align: center;
+    }
+
     .trays {
         display: flex;
         flex-direction: column-reverse;
         gap: 20px;
-        width: 600px; /* fix for mobile */
+        width: 100%;
     }
 
     .tray {
@@ -138,7 +148,15 @@
         box-shadow: 0 0 2px gray;
     }
 
+    .question {
+        display: inline-block;
+    }
+
     .start {
         display: flex;
+    }
+
+    .spacing {
+        margin-bottom: 40px;
     }
 </style>
