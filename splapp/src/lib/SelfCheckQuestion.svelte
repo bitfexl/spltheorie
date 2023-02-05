@@ -35,6 +35,7 @@
 </script>
 
 <div class="questionWrapper">
+    <p class="question-id">{question.id} | {question.category.name}</p>
     <div class="question">
         <QuizQuestion {question} bind:selected bind:correct {showCorrect} />
     </div>
@@ -64,5 +65,10 @@
     button {
         margin-top: 20px;
         font-size: 1.06em;
+    }
+
+    .question-id {
+        color: darkslategray;
+        font-size: 0.91em;
     }
 </style>
